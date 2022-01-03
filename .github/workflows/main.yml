@@ -13,7 +13,6 @@ jobs:
       with:
         host: ${{ secrets.IP }}
         username: ${{ secrets.USER }}
-        password: ${{ secrets.AUTOGIT_SSHKEY_PASSWORD }}
         key: ${{ secrets.AUTOGIT_SSHKEY }}
         port: 22
         script: |
