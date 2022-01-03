@@ -15,7 +15,7 @@ polandCases = jhu_cases[5:length(jhu_cases)]
 start_day <- "2020-4-3"
 
 ui <- fluidPage(
-  tags$head(includeScript("ga_header.html")),
+  tags$head(includeScript("GA_header.html")),
   titlePanel("Zestaw lego w oparciu o dzienną liczbę nowych przypadków COVID-19"),
 
   sidebarLayout(
