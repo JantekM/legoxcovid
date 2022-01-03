@@ -14,6 +14,7 @@ jobs:
         host: ${{ secrets.IP }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.AUTOGIT_SSHKEY }}
+        passphrase: ${{ secrets.AUTOGIT_SSHKEY_PASSWORD }}
         port: 22
         script: |
           cd /srv/shiny-server/legoxcovid/
