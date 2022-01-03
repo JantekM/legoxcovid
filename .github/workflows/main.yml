@@ -5,7 +5,7 @@ on:
 
 jobs:
   deployJob:
-    name: Deploy
+    name: Deploy shiny app
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password
@@ -13,11 +13,12 @@ jobs:
       with:
         host: ${{ secrets.IP }}
         username: ${{ secrets.USER }}
-        key: ${{ secrets.AUTOGIT_SSHKEY }}
-        passphrase: ${{ secrets.AUTOGIT_SSHKEY_PASSWORD }}
+        key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
           cd /srv/shiny-server/legoxcovid/
+          hostname
+          whoami
           git pull
           git status
           
