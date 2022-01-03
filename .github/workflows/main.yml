@@ -1,0 +1,23 @@
+name: Remote deployment
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deployJob:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.IP }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.AUTOGIT_SSHKEY_PASSWORD }}
+        key: ${{ secrets.AUTOGIT_SSHKEY }}
+        port: 22
+        script: |
+          cd /srv/shiny-server/legoxcovid/
+          git pull
+          git status
+          
