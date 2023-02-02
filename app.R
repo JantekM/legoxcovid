@@ -44,6 +44,8 @@ ui <- fluidPage(
 
 
     mainPanel(
+      uiOutput("isFound1"),
+      uiOutput("isFound2"),
       uiOutput("setImg"),
       textOutput("setNum"),
       textOutput("setName"),
@@ -56,7 +58,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   timer <- reactiveTimer(1000 * 60 * 10) #10 minutes
 
-  scrapeLegoData <- function(number) {
+  scrapeLegoData <- function(number, isFoundArg) {
     legoPage = readLines(paste0('https://brickset.com/sets/', number))
 
     legoExists = grep("Sorry, we don't have a set with that number in our database.",
@@ -90,17 +92,18 @@ server <- function(input, output, session) {
 
       return(
         list(
-          imgUrl,
-          lego.setNumber,
-          lego.setName,
-          lego.setYearReleased,
-          lego.setNumOfPieces
+          img = imgUrl,
+          num = lego.setNumber,
+          name = lego.setName,
+          year = lego.setYearReleased,
+          pieces = lego.setNumOfPieces,
+          isFound = isFoundArg
         )
       )
     }
     else{
       print(paste("no lego found for", number))
-      return(scrapeLegoData(2137))
+      return(scrapeLegoData(2137, F))
     }
 
   }
@@ -130,7 +133,7 @@ server <- function(input, output, session) {
 
   legoData <-
     reactive({
-      scrapeLegoData(getCovidFromDate(input$chosenDate))
+      scrapeLegoData(getCovidFromDate(input$chosenDate), T)
     })
 
 
@@ -166,6 +169,14 @@ server <- function(input, output, session) {
   #   # file.remove(z) # cleanup
   #   list(src = image_read(legoData()[[1]]), alt = 'Brak dostępnego zdjęcia')
   # }, deleteFile = T)
+  output$isFound1 <- renderUI( {
+      tags$h2(ifelse(legoData()['isFound'],'','Ups, zestawu o takim numerze niestety nie ma :-('))
+
+  })
+  output$isFound2 <- renderUI( {
+      tags$h4(ifelse(legoData()['isFound'],'','Zamiast tego proponujemy zestaw domyślny:'))
+
+  })
 
   output$setImg <- renderUI({
     tags$img(src = legoData()[[1]])
