@@ -5,6 +5,6 @@ May be buggy as hell but, ya know, that's not the point.
 
 ### You can see it in action [HERE](https://io.jantoni.pl/legoxcovid).
 
-![a screenshot from the app](screenshot.jpg "Yup, exactly what we needed")
+![a screenshot from the app](screenshot.JPG "Yup, exactly what we needed")
 
 
